@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using _State;
 using _EventBus;
+using UnityEditor.Rendering;
 
 public class PlayerCtrl : MonoBehaviour
 {
     public Rigidbody2D m_rigidbody;
     public Animator m_animator;
+    public BoxCollider2D m_box_collider;
 
-    public float m_player_speed = 2.0f;
+    public LayerMask m_layer_mask;
 
-    public Vector3 m_move_vec = new Vector3(0f, 0f, -90f);
+    public float m_player_speed = 0.02f;
+    public Vector3 m_move_vec;
+    public int m_walk_count;
+    private int m_current_walk_count;
     public bool m_is_move = false;
 
     private IPlayerState m_stop_state, m_move_state;
@@ -55,37 +60,22 @@ public class PlayerCtrl : MonoBehaviour
         m_player_state_context.Transition(m_stop_state);
     }
 
-    public void StopPlayer()
-    {
-        m_player_state_context.Transition(m_stop_state);
-    }
-
-    public void MovePlayer()
-    {
-        m_player_state_context.Transition(m_move_state);
-    }
-
-    public void SetAxis()
-    {
-        if(m_move_vec.x == 0f && m_move_vec.y == 0f)
-            m_is_move = false;
-        else
-            m_is_move = true;
-    }
-
     private void Update()
     {
         DataManager.Instance.m_now_player.m_player_position = transform.position;
-        SetAxis();
 
         if(!GameManager.Instance.m_is_talk && GameManager.Instance.m_game_status != "pause")
-            m_move_vec = new Vector3(Input.GetAxisRaw("Horizontal"),
-                                        Input.GetAxisRaw("Vertical"), m_move_vec.z);
+        {
+            if(!m_is_move)
+            {
+                if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                {
+                    m_is_move = true;
+                    StartCoroutine(MoveCoroutine());
+                }
+            }
 
-        if(m_is_move == false)
-            StopPlayer();
-        else
-            MovePlayer();
+        }
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -102,14 +92,47 @@ public class PlayerCtrl : MonoBehaviour
                 GameEventBus.Publish(GameEventType.PLAYING);
             }
         }
-            
     }
 
-    private void FixedUpdate()
+    private IEnumerator MoveCoroutine()
     {
-        if(GameManager.Instance.m_game_status == "playing")
-            m_rigidbody.velocity = new Vector2(m_move_vec.x, m_move_vec.y) * m_player_speed;
-        else
-            m_rigidbody.velocity = Vector2.zero;
+        while(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            m_move_vec.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
+
+            if(m_move_vec.x != 0)
+                m_move_vec.y = 0;
+            
+            RaycastHit2D hit = GetComponent<ScanManager>().CheckCanMove();
+            if(hit.transform != null)
+                break;
+
+            MovePlayer();
+
+            while(m_current_walk_count < m_walk_count)
+            {
+                if(m_move_vec.x != 0)
+                    transform.Translate(m_move_vec.x * m_player_speed, 0, 0);
+                else if(m_move_vec.y != 0)
+                    transform.Translate(0, m_move_vec.y * m_player_speed, 0);
+
+                m_current_walk_count++;
+                yield return new WaitForSeconds(0.01f);
+            }
+            m_current_walk_count = 0;
+        }
+        m_is_move = false;
+        
+        StopPlayer();
+    }
+
+    public void StopPlayer()
+    {
+        m_player_state_context.Transition(m_stop_state);
+    }
+
+    public void MovePlayer()
+    {
+        m_player_state_context.Transition(m_move_state);
     }
 }

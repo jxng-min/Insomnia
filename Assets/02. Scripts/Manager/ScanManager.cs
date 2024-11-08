@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class ScanManager : MonoBehaviour
@@ -58,5 +60,19 @@ public class ScanManager : MonoBehaviour
             m_scan_object = ray_hit.collider.gameObject;
         else
             m_scan_object = null;
+    }
+
+    public RaycastHit2D CheckCanMove()
+    {
+        Vector2 move_start = m_player_ctrl.transform.position;
+        Vector2 move_end = move_start + new Vector2 (
+                                                        m_player_ctrl.m_move_vec.x * m_player_ctrl.m_player_speed * m_player_ctrl.m_walk_count,
+                                                        m_player_ctrl.m_move_vec.y * m_player_ctrl.m_player_speed * m_player_ctrl.m_walk_count
+                                                    );
+        m_player_ctrl.m_box_collider.enabled = false;
+        RaycastHit2D hit = Physics2D.Linecast(move_start, move_end, m_player_ctrl.m_layer_mask);
+        m_player_ctrl.m_box_collider.enabled = true;
+
+        return hit;
     }
 }

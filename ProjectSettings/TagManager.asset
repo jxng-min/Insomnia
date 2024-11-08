@@ -18,7 +18,7 @@ TagManager:
   - LIGHTOBSTACLES
   - LIGHTSOURCE
   - AMBIENTLIGHT
-  - 
+  - NOPASSING
   - 
   - 
   - 

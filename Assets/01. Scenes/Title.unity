@@ -1375,7 +1375,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u24D2 2024 Goldmetal. All Right Reserved. Published by jxng-min"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e46177c557eec6b4db41f0d3c8a2e734, type: 2}
   m_sharedMaterial: {fileID: -436530298339063624, guid: e46177c557eec6b4db41f0d3c8a2e734, type: 2}
