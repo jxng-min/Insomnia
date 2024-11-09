@@ -12,6 +12,7 @@ public class PlayerCtrl : MonoBehaviour
     public BoxCollider2D m_box_collider;
 
     public LayerMask m_layer_mask;
+    public bool m_is_no_passing = false;
 
     public float m_player_speed = 0.02f;
     public Vector3 m_move_vec;
@@ -52,6 +53,7 @@ public class PlayerCtrl : MonoBehaviour
 
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
+        m_box_collider = GetComponent<BoxCollider2D>();
 
         m_stop_state = gameObject.AddComponent<PlayerStopState>();
         m_move_state = gameObject.AddComponent<PlayerMoveState>();
@@ -70,6 +72,7 @@ public class PlayerCtrl : MonoBehaviour
             {
                 if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
                 {
+                    m_is_no_passing = false;
                     m_is_move = true;
                     StartCoroutine(MoveCoroutine());
                 }
@@ -105,7 +108,11 @@ public class PlayerCtrl : MonoBehaviour
             
             RaycastHit2D hit = GetComponent<ScanManager>().CheckCanMove();
             if(hit.transform != null)
+            {
+                m_is_no_passing = true;
+                MovePlayer();
                 break;
+            }
 
             MovePlayer();
 

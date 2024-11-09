@@ -47,12 +47,12 @@ public class ScanManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.DrawRay(m_player_ctrl.m_rigidbody.position, m_dir_vec * 0.7f, new Color(0, 1, 0));
+        Debug.DrawRay(m_player_ctrl.m_rigidbody.position, m_dir_vec * 1.25f, new Color(0, 1, 0));
         
         RaycastHit2D ray_hit = Physics2D.Raycast(
                                                     m_player_ctrl.m_rigidbody.position, 
                                                     m_dir_vec, 
-                                                    0.7f, 
+                                                    1.25f, 
                                                     LayerMask.GetMask("OBJECT")
                                                 );
 

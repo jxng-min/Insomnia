@@ -69,14 +69,14 @@ public class QuestManager : Singleton<QuestManager>
         
         case 30:
             if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("삼단봉");
+                DataManager.Instance.m_now_player.m_items.Add("셀카봉");
             else if(DataManager.Instance.m_now_player.m_quest_action_id == 2)
                 DataManager.Instance.m_now_player.m_items.Add("스마트폰");
             break;
 
         case 50:
             if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("사랑의 비법서");
+                DataManager.Instance.m_now_player.m_items.Add("모든 순간이 너였다");
             break;
 
         case 80:
@@ -93,7 +93,7 @@ public class QuestManager : Singleton<QuestManager>
 
         case 110:
             if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("여자친구의 머리");
+                DataManager.Instance.m_now_player.m_items.Add("피묻은 식칼");
             break;
         }
     }

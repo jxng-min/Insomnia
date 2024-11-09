@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerData
 {
-    public Vector3 m_player_position;
+    public Vector2 m_player_position;
     public float m_play_time;
     public int m_quest_id;
     public int m_quest_action_id;
@@ -15,7 +15,7 @@ public class PlayerData
 
     public PlayerData()
     {
-        m_player_position = new Vector3(8, -13, 0);
+        m_player_position = new Vector2(12.75f, -20.25f);
         m_play_time = 0f;
         m_quest_id = 10;
         m_quest_action_id = 0;

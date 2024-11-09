@@ -15,7 +15,9 @@ namespace _State
 
             m_player_ctrl.m_animator.SetFloat("DirX", m_player_ctrl.m_move_vec.x);
             m_player_ctrl.m_animator.SetFloat("DirY", m_player_ctrl.m_move_vec.y);
-            m_player_ctrl.m_animator.SetBool("IsMove", true);
+
+            if(!m_player_ctrl.m_is_no_passing)
+                m_player_ctrl.m_animator.SetBool("IsMove", true);
         }
     }
 }
