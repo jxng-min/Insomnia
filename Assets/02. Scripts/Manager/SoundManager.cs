@@ -13,6 +13,11 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip m_title_background;
     public AudioClip m_game_background;
 
+    public AudioClip m_bed_trick;
+    public AudioClip m_knife_trick;
+    public AudioClip m_police_trick;
+    public AudioClip m_escape_trick;
+
     private void Start()
     {
         SoundManager.Instance.Initialize();
@@ -24,6 +29,10 @@ public class SoundManager : Singleton<SoundManager>
         m_button_push_effect = Resources.Load<AudioClip>("06. Sounds/Effect/Save_Success");
         m_title_background = Resources.Load<AudioClip>("06. Sounds/Background/Title_Background");
         m_game_background = Resources.Load<AudioClip>("06. Sounds/Background/InGame_Background");
+        m_bed_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Bed");
+        m_knife_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Knife");
+        m_police_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Siren");
+        m_escape_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Escape");
 
         if(m_audio_source == null && m_bgm == null)
         {
@@ -64,5 +73,25 @@ public class SoundManager : Singleton<SoundManager>
             m_bgm.clip = m_game_background;
             m_bgm.Play();
         }
+    }
+
+    public void BedTrick()
+    {
+        m_audio_source.PlayOneShot(m_bed_trick);
+    }
+
+    public void KnifeTrick()
+    {
+        m_audio_source.PlayOneShot(m_knife_trick);
+    }
+
+    public void PoliceTrick()
+    {
+        m_audio_source.PlayOneShot(m_police_trick);
+    }
+
+    public void EscapeTrick()
+    {
+        m_audio_source.PlayOneShot(m_escape_trick);
     }
 }

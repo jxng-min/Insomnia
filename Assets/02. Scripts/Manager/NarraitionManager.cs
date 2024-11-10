@@ -170,7 +170,6 @@ public class NarraitionManager : MonoBehaviour
                 break;
             
             default:
-                Debug.Log("Unhandled quest ID: " + DataManager.Instance.m_now_player.m_quest_id);
                 break;
             }
         }

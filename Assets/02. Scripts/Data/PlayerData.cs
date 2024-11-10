@@ -12,6 +12,7 @@ public class PlayerData
     public List<string> m_items;
     public int m_nar_id;
     public bool[] m_nar_actions;
+    public bool[] m_trick_images;
 
     public PlayerData()
     {
@@ -22,5 +23,6 @@ public class PlayerData
         m_items = new List<string>();
         m_nar_id = 10;
         m_nar_actions = new bool[6];
+        m_trick_images = new bool[3];
     }
 }

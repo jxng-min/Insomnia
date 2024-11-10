@@ -47,10 +47,10 @@ public class DialogueManager : Singleton<DialogueManager>
         m_talk_data.Add(Convert.ToInt32(ObjectName.Emp1), new string[] {"기타에 연결해서 사용하는 앰프다."});
         m_talk_data.Add(Convert.ToInt32(ObjectName.Emp2), new string[] {"기타에 연결해서 사용하는 앰프다."});
         m_talk_data.Add(Convert.ToInt32(ObjectName.Box1), new string[] {"이사를 하고 나서 정리하지 못한 짐들이야.", "컨디션이 괜찮아지면 정리해야겠어."});
-        m_talk_data.Add(Convert.ToInt32(ObjectName.Box2), new string[] {"이사를 하고 나서 정리하지 못한 짐들이다.", "쌓여있는 짐들을 보면 정리 하기 싫어."});
-        m_talk_data.Add(Convert.ToInt32(ObjectName.Box3), new string[] {"이사를 하고 나서 정리하지 못한 짐들이다.", "컨디션이 괜찮아지면 정리해야겠어."});
-        m_talk_data.Add(Convert.ToInt32(ObjectName.Box4), new string[] {"이사를 하고 나서 정리하지 못한 짐들이다."});
-        m_talk_data.Add(Convert.ToInt32(ObjectName.Box5), new string[] {"이사를 하고 나서 정리하지 못한 짐들이다.", "컨디션이 괜찮아지면 정리해야겠어."});
+        m_talk_data.Add(Convert.ToInt32(ObjectName.Box2), new string[] {"이사를 하고 나서 정리하지 못한 짐들이야.", "쌓여있는 짐들을 보면 정리 하기 싫어."});
+        m_talk_data.Add(Convert.ToInt32(ObjectName.Box3), new string[] {"이사를 하고 나서 정리하지 못한 짐들이야.", "컨디션이 괜찮아지면 정리해야겠어."});
+        m_talk_data.Add(Convert.ToInt32(ObjectName.Box4), new string[] {"이사를 하고 나서 정리하지 못한 짐들이야."});
+        m_talk_data.Add(Convert.ToInt32(ObjectName.Box5), new string[] {"이사를 하고 나서 정리하지 못한 짐들이야.", "컨디션이 괜찮아지면 정리해야겠어."});
         m_talk_data.Add(Convert.ToInt32(ObjectName.Bag1), new string[] {"언젠가 사용한 적이 있던 캐리어야.", "자물쇠로 굳게 잠겨있어."});
         m_talk_data.Add(Convert.ToInt32(ObjectName.Bag2), new string[] {"이사올 때 가지고 왔던 가방이야.", "자물쇠로 굳게 잠겨있어."});
         m_talk_data.Add(Convert.ToInt32(ObjectName.Closet1), new string[] {"많은 옷이 들어있는 옷장이야.", "별로 특별한 것은 없어 보여."});
@@ -103,12 +103,12 @@ public class DialogueManager : Singleton<DialogueManager>
         m_talk_data.Add(80 + Convert.ToInt32(ObjectName.Chair3), new string[] {"의자 밑을 자세히 살펴보니 반짝이는 것이 있어.", "[반지]를 획득했어.", "이 반지.. 내 손에는 들어가지 않아.", "OO이껀가? 왜 우리집에 있지?", "돌려줘야겠다."});
     
         m_talk_data.Add(90 + Convert.ToInt32(ObjectName.TV), new string[] {"TV가 있는 선반을 살펴보니 반짝이는 것이 있어.", "[이사용 가방 열쇠]를 획득했어."});
-        m_talk_data.Add(91 + Convert.ToInt32(ObjectName.Bag2), new string[] {"이사올 때 비상용으로 사용했던 가방이야.", "자물쇠로 굳게 잠겨있지만 열쇠를 사용하면 열 수 있을 것 같아.", "열쇠를 사용할까?", "[이사용 가방 열쇠]를 사용하여 이사용 가방을 열었다.", "가방 속에는 피가 묻은 수건과 식칼, 오래되어 보이는 CD가 있다.", "[오래된 CD]를 얻었다."});
-        m_talk_data.Add(92 + Convert.ToInt32(ObjectName.TV), new string[] {"TV에 연결된 CD 플레이어에 CD를 넣었다.", "CD를 재생하니 예전 기억들이 떠오르네."});
+        m_talk_data.Add(91 + Convert.ToInt32(ObjectName.Bag2), new string[] {"이사올 때 비상용으로 사용했던 가방이야.", "자물쇠로 굳게 잠겨있지만 열쇠를 사용하면 열 수 있을 것 같아.", "열쇠를 사용할까?", "[이사용 가방 열쇠]를 사용하여 이사용 가방을 열었어.", "가방 속에는 오래되어 보이는 CD가 있다.", "[오래된 CD]를 얻었어."});
+        m_talk_data.Add(92 + Convert.ToInt32(ObjectName.TV), new string[] {"TV에 연결된 CD 플레이어에 CD를 넣었어.", "CD를 재생하니 예전 기억들이 떠오르네."});
 
         m_talk_data.Add(100 + Convert.ToInt32(ObjectName.Bed4), new string[] {"힘들어서 침대에서 쉬고 싶어졌어.", "침대에 누우니 어렴풋이 잊었던 기억이 떠오르네.", "OO이가 우리 집에 놀러왔었어.", "놀던 도중에 사소한 다툼이 있었었고...??", "그녀는 나에게 헤어지자고 했다.", "그리고 어떻게 되었더라..", "...", "그녀의 행방을 찾아보는게 좋겠어."});
 
-        m_talk_data.Add(110 + Convert.ToInt32(ObjectName.Box1), new string[] {"이사용 박스가 있어. 이사용 박스를 조사할까?", "이사용 박스를 하나하나 옮기기 시작했다.", "옮기던 도중에 무거운 박스를 발견했다.", "무거운 박스를 열어볼까?", "...", "[피묻은 식칼]을 획득했다."});
+        m_talk_data.Add(110 + Convert.ToInt32(ObjectName.Box1), new string[] {"이사용 박스가 있어. 이사용 박스를 조사할까?", "이사용 박스를 하나하나 옮기기 시작했다.", "옮기던 도중에 무거운 박스를 발견했다.", "무거운 박스를 열어볼까?", "...", "[피묻은 식칼]을 획득했어."});
     
         m_talk_data.Add(120 + Convert.ToInt32(ObjectName.Bed4), new string[] {"생각해보니 내가 OO를 죽였어.", "...", "내가 그녀를 죽였어.", "어쩌지?"});
     
