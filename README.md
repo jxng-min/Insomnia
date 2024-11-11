@@ -1,27 +1,35 @@
-## Insomnia
+# Insomnia(불면증)
 
-</br>
-</br>
+### 개요
 
-### 게임 타이틀
+대학교 수업의 과제 활동의 개인 프로젝트 '불면증'입니다. 유니티 엔진 5.0을 활용하여 2D Top-Down 뷰 공포 게임을 제작하는 것이 목표입니다.
 
-</br>
-
-![화면 캡처 2024-11-09 185630](https://github.com/user-attachments/assets/99abab4c-50f4-4337-b4b4-2af9fdd4c8de)
-
-</br>
+<br>
 </br>
 
-### 인게임
+### 프로젝트 요약
 
+| 정보 | 설명 |
+|-----|-------|
+| 게임 명 | 불면증(Insomnia) |
+| 게임 장르| 2D, 공포, 스릴러, 탑다운뷰 |
+| 사용 유니티 버전| 2022.3.46f1 -> 6000.0.26f1 |
+| 프로젝트 기간 | 2024.09.13 ~ ing |
+| 기타 | |
+
+<br>
 </br>
 
-![화면 캡처 2024-11-09 185709](https://github.com/user-attachments/assets/a3a75db8-700b-4dff-9bd1-5a24408fb8f2)
+### 프로젝트 빌드 파일
 
+[Google Drive]()
+
+<br>
 </br>
 
-![화면 캡처 2024-11-09 185751](https://github.com/user-attachments/assets/e4b55ce7-e5eb-4e14-8515-102eaca30404)
+### 사용 에셋
 
-</br>
-
-![화면 캡처 2024-11-09 185802](https://github.com/user-attachments/assets/a4f821fa-d5d8-43ae-a522-bf3d24bbfb72)
+* [GameBoy Style Home Interior Tileset](https://monkeyimage.itch.io/home-interior-tilesheet-gameboy-styled)
+* [8-Directional Game Boy Character Template](https://gibbongl.itch.io/8-directional-gameboy-character-template)
+* [Top-Down 2D RPG](https://goldmetal.co.kr/)
+* [네오둥근모](https://neodgm.dalgona.dev/)
