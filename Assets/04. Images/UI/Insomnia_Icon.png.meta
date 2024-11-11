@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Insomnia_Icon_0: -6865461496493317748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
