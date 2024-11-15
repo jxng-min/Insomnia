@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using _State;
 using _EventBus;
-using UnityEditor.Rendering;
 
 public class PlayerCtrl : MonoBehaviour
 {
