@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerData
 {
     public Vector2 m_player_position;
@@ -9,9 +9,6 @@ public class PlayerData
     public int m_quest_id;
     public int m_quest_action_id;
     public List<string> m_items;
-    public int m_nar_id;
-    public bool[] m_nar_actions;
-    public bool[] m_trick_images;
 
     public PlayerData()
     {
@@ -20,8 +17,5 @@ public class PlayerData
         m_quest_id = 10;
         m_quest_action_id = 0;
         m_items = new List<string>();
-        m_nar_id = 10;
-        m_nar_actions = new bool[6];
-        m_trick_images = new bool[3];
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TypeEffectCtrl : MonoBehaviour
 {
@@ -17,7 +14,6 @@ public class TypeEffectCtrl : MonoBehaviour
     private void Awake()
     {
         m_current_text = GetComponent<TMP_Text>();
-        m_end_cursor = ObjectFindManager.FindInactiveObject("Cursor_Dialogue");
     }
 
     public void SetText(string text)

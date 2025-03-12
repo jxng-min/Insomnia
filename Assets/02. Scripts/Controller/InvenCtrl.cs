@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class InvenCtrl : MonoBehaviour
@@ -11,8 +8,8 @@ public class InvenCtrl : MonoBehaviour
     {
         m_slots = GetComponentsInChildren<SlotCtrl>();
 
-        for(int i = 0; i < DataManager.Instance.m_now_player.m_items.Count; i++)
-            AcquireItem(DataManager.Instance.m_now_player.m_items[i]);
+        for(int i = 0; i < DataManager.Instance.PlayerData.m_items.Count; i++)
+            AcquireItem(DataManager.Instance.PlayerData.m_items[i]);
     }
 
     private void AcquireItem(string item_name)

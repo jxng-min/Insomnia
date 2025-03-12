@@ -1,35 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ButtonCtrl : MonoBehaviour
 {
-    public Button[] m_buttons;
-    private int m_current_idx = 0;
+    [Header("버튼의 부모 트랜스폼")]
+    [SerializeField] private Transform m_button_root;
+    private Button[] m_buttons;
 
-    private void Start()
+    private int m_current_index = 0;
+    public int Index
     {
-        if(m_buttons.Length >= 0f)
-            EventSystem.current.SetSelectedGameObject(m_buttons[m_current_idx].gameObject);
+        get { return m_current_index; }
+        private set { m_current_index = value; }
+    }
+
+    private void Awake()
+    {
+        m_buttons = m_button_root.GetComponentsInChildren<Button>();
+
+        EventSystem.current.SetSelectedGameObject(m_buttons[0].gameObject);   
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SoundManager.Instance.ButtonSelect();
-            m_current_idx = (m_current_idx - 1 + m_buttons.Length) % m_buttons.Length;
-            EventSystem.current.SetSelectedGameObject(m_buttons[m_current_idx].gameObject);
+            Index = (Index - 1 + m_buttons.Length) % m_buttons.Length;
+            EventSystem.current.SetSelectedGameObject(m_buttons[Index].gameObject);            
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SoundManager.Instance.ButtonSelect();
-            m_current_idx = (m_current_idx + 1 + m_buttons.Length) % m_buttons.Length;
-            EventSystem.current.SetSelectedGameObject(m_buttons[m_current_idx].gameObject);
+            Index = (Index + 1 + m_buttons.Length) % m_buttons.Length;
+            EventSystem.current.SetSelectedGameObject(m_buttons[Index].gameObject);
         }
-        else if(Input.GetButtonDown("Jump"))
-            SoundManager.Instance.ButtonClick();
+    }
+
+    public void Initialization()
+    {
+        EventSystem.current.SetSelectedGameObject(m_buttons[Index].gameObject);
     }
 }

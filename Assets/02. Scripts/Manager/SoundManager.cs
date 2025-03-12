@@ -1,97 +1,133 @@
 using System.Collections;
-using System.Collections.Generic;
-using _Singleton;
 using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    public AudioSource m_bgm;
-    public AudioSource m_audio_source;
-
-    public AudioClip m_button_select_effect;
-    public AudioClip m_button_push_effect;
-    public AudioClip m_title_background;
-    public AudioClip m_game_background;
-
-    public AudioClip m_bed_trick;
-    public AudioClip m_knife_trick;
-    public AudioClip m_police_trick;
-    public AudioClip m_escape_trick;
-
-    private void Start()
+    [SerializeField] private AudioSource m_background_source;
+    public AudioSource BGM
     {
-        SoundManager.Instance.Initialize();
+        get { return m_background_source; }
     }
 
-    public void Initialize()
-    {
-        m_button_select_effect = Resources.Load<AudioClip>("06. Sounds/Effect/Button_Click");
-        m_button_push_effect = Resources.Load<AudioClip>("06. Sounds/Effect/Save_Success");
-        m_title_background = Resources.Load<AudioClip>("06. Sounds/Background/Title_Background");
-        m_game_background = Resources.Load<AudioClip>("06. Sounds/Background/InGame_Background");
-        m_bed_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Bed");
-        m_knife_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Knife");
-        m_police_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Siren");
-        m_escape_trick = Resources.Load<AudioClip>("06. Sounds/InGame/Escape");
+    [SerializeField] private AudioClip[] m_background_clips;
+    [SerializeField] private AudioClip[] m_effect_clips;
 
-        if(m_audio_source == null && m_bgm == null)
+    private string m_last_background_name;
+    public string LastBGM
+    {
+        get { return m_last_background_name; }
+    }
+
+    private new void Awake()
+    {
+        base.Awake();
+    }
+
+    public void PlayBGM(string background_name)
+    {
+        StartCoroutine(ChangeBGM(background_name));
+    }
+
+    public IEnumerator ChangeBGM(string background_name)
+    {
+        int target_index = -1;
+        for(int i = 0; i < m_background_clips.Length; i++)
         {
-            m_audio_source = gameObject.AddComponent<AudioSource>();
-            m_bgm = gameObject.AddComponent<AudioSource>();
+            if(m_background_clips[i].name == background_name)
+            {
+                target_index = i;
+                break;
+            }
         }
 
-        m_bgm.loop = true;
-        m_bgm.volume = 0.3f;
-
-        m_audio_source.volume = 0.3f;
-        m_audio_source.playOnAwake = false;
-    }
-
-    public void ButtonSelect()
-    {
-        m_audio_source.PlayOneShot(m_button_select_effect);
-    }
-
-    public void ButtonClick()
-    {
-        m_audio_source.PlayOneShot(m_button_push_effect);
-    }
-
-    public void TitleBackground()
-    {
-        if(m_title_background != null)
+        if(target_index != -1)
         {
-            m_bgm.clip = m_title_background;
-            m_bgm.Play();
+            if(m_background_source.isPlaying)
+            {
+                if(m_background_source.clip is not null)
+                {
+                    m_last_background_name = m_background_source.clip.name;
+                }
+
+                yield return StartCoroutine(Fade(m_background_source, true, true));
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            m_background_source.clip = m_background_clips[target_index]; 
+            m_background_source.Play();
+
+            yield return StartCoroutine(Fade(m_background_source, false, true));
         }
     }
 
-    public void GameBackground()
+    public void PlayEffect(string effect_name)
     {
-        if(m_game_background != null)
+        int target_index = -1;
+        for(int i = 0; i < m_effect_clips.Length; i++)
         {
-            m_bgm.clip = m_game_background;
-            m_bgm.Play();
+            if(m_effect_clips[i].name == effect_name)
+            {
+                target_index = i;
+                break;
+            }
+        }
+
+        if(target_index != -1)
+        {
+            AudioSource effect_source = ObjectManager.Instance.GetObject(ObjectType.EFFECTSOURCE).GetComponent<AudioSource>();
+
+            effect_source.volume = 0.5f;
+            effect_source.clip = m_effect_clips[target_index]; 
+            effect_source.Play();
+
+            StartCoroutine(ReturnEffect(effect_source));
         }
     }
 
-    public void BedTrick()
+    private IEnumerator ReturnEffect(AudioSource target_source)
     {
-        m_audio_source.PlayOneShot(m_bed_trick);
+        float elapsed_time = 0f;
+        float target_time = target_source.clip.length;
+
+        while(elapsed_time < target_time)
+        {
+            elapsed_time += Time.deltaTime;
+            yield return null;
+        }
+
+        ObjectManager.Instance.ReturnObject(target_source.gameObject, ObjectType.EFFECTSOURCE);
     }
 
-    public void KnifeTrick()
+    private IEnumerator Fade(AudioSource target_source, bool is_out, bool is_background)
     {
-        m_audio_source.PlayOneShot(m_knife_trick);
-    }
+        float elapsed_time = 0f;
+        float target_time = 1f;
 
-    public void PoliceTrick()
-    {
-        m_audio_source.PlayOneShot(m_police_trick);
-    }
+        while(elapsed_time < target_time)
+        {
+            float f = elapsed_time / target_time;
 
-    public void EscapeTrick()
-    {
-        m_audio_source.PlayOneShot(m_escape_trick);
+            if(is_out)
+            {
+                target_source.volume = Mathf.Lerp(0.5f, 0f, f);
+            }
+            else
+            {
+                target_source.volume = Mathf.Lerp(0f, 0.5f, f);
+            }
+
+            elapsed_time += Time.deltaTime;
+
+            yield return null;
+        }
+
+        if(is_out)
+        {
+            target_source.volume = 0f;
+        }
+        else
+        {
+            target_source.volume = 0.5f;
+        }
     }
 }

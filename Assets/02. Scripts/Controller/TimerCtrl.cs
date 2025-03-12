@@ -1,30 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using _EventBus;
-using System;
+using UnityEngine;
 
 public class TimerCtrl : MonoBehaviour
 {
-    private float m_sec_cnt;
-    private int m_min;
-    private int m_sec;
-
-    void Start()
+    [Header("시간 UI TMP")]
+    [SerializeField] private TMP_Text m_time_label;
+    private void Update()
     {
-        m_min = Mathf.FloorToInt(DataManager.Instance.m_now_player.m_play_time / 60f);
-        m_sec = Mathf.FloorToInt(DataManager.Instance.m_now_player.m_play_time % 60f);
-    }
-
-    void Update()
-    {
-        if(!GameManager.Instance.m_is_talk && GameManager.Instance.m_game_status == "playing")
+        if(GameManager.Instance.GameState == GameEventType.Playing)
         {
-            DataManager.Instance.m_now_player.m_play_time += Time.deltaTime;
+            DataManager.Instance.PlayerData.m_play_time += Time.deltaTime;
 
-            m_min = Mathf.FloorToInt(DataManager.Instance.m_now_player.m_play_time / 60f);
-            m_sec = Mathf.FloorToInt(DataManager.Instance.m_now_player.m_play_time % 60f);
+            int min = Mathf.FloorToInt(DataManager.Instance.PlayerData.m_play_time / 60);
+            int sec = Mathf.FloorToInt(DataManager.Instance.PlayerData.m_play_time % 60);
+
+            m_time_label.text = $"플레이 타임 [{min:D2} : {sec:D2}]";
         }
     }
 }

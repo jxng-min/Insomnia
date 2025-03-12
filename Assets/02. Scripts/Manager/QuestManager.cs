@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using _Singleton;
-using UnityEngine;
 
 public class QuestManager : Singleton<QuestManager>
 {
@@ -34,66 +31,66 @@ public class QuestManager : Singleton<QuestManager>
 
     public int GetQuestDialogueIndex(int object_id)
     {
-        return DataManager.Instance.m_now_player.m_quest_id + DataManager.Instance.m_now_player.m_quest_action_id;
+        return DataManager.Instance.PlayerData.m_quest_id + DataManager.Instance.PlayerData.m_quest_action_id;
     }
 
     public string CheckQuest(int id)
     {
-        if(id == m_quest_list[DataManager.Instance.m_now_player.m_quest_id].m_npc_id[DataManager.Instance.m_now_player.m_quest_action_id])
-            DataManager.Instance.m_now_player.m_quest_action_id++;
+        if(id == m_quest_list[DataManager.Instance.PlayerData.m_quest_id].m_npc_id[DataManager.Instance.PlayerData.m_quest_action_id])
+            DataManager.Instance.PlayerData.m_quest_action_id++;
 
         ControlObject();
 
-        if(DataManager.Instance.m_now_player.m_quest_action_id == m_quest_list[DataManager.Instance.m_now_player.m_quest_id].m_npc_id.Length)
+        if(DataManager.Instance.PlayerData.m_quest_action_id == m_quest_list[DataManager.Instance.PlayerData.m_quest_id].m_npc_id.Length)
             NextQuest();
 
-        return m_quest_list[DataManager.Instance.m_now_player.m_quest_id].m_quest_name;
+        return m_quest_list[DataManager.Instance.PlayerData.m_quest_id].m_quest_name;
     }
 
     private void NextQuest()
     {
-        DataManager.Instance.m_now_player.m_quest_id += 10;
-        DataManager.Instance.m_now_player.m_quest_action_id = 0;
+        DataManager.Instance.PlayerData.m_quest_id += 10;
+        DataManager.Instance.PlayerData.m_quest_action_id = 0;
     }
 
     private void ControlObject()
     {
-        switch(DataManager.Instance.m_now_player.m_quest_id)
+        switch(DataManager.Instance.PlayerData.m_quest_id)
         {
         case 20:
-            if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("니퍼");
-            else if(DataManager.Instance.m_now_player.m_quest_action_id == 2)
-                DataManager.Instance.m_now_player.m_items.Add("여행가방 열쇠");
+            if(DataManager.Instance.PlayerData.m_quest_action_id == 1)
+                DataManager.Instance.PlayerData.m_items.Add("니퍼");
+            else if(DataManager.Instance.PlayerData.m_quest_action_id == 2)
+                DataManager.Instance.PlayerData.m_items.Add("여행가방 열쇠");
             break;
         
         case 30:
-            if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("셀카봉");
-            else if(DataManager.Instance.m_now_player.m_quest_action_id == 2)
-                DataManager.Instance.m_now_player.m_items.Add("스마트폰");
+            if(DataManager.Instance.PlayerData.m_quest_action_id == 1)
+                DataManager.Instance.PlayerData.m_items.Add("셀카봉");
+            else if(DataManager.Instance.PlayerData.m_quest_action_id == 2)
+                DataManager.Instance.PlayerData.m_items.Add("스마트폰");
             break;
 
         case 50:
-            if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("모든 순간이 너였다");
+            if(DataManager.Instance.PlayerData.m_quest_action_id == 1)
+                DataManager.Instance.PlayerData.m_items.Add("모든 순간이 너였다");
             break;
 
         case 80:
-            if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("반지");
+            if(DataManager.Instance.PlayerData.m_quest_action_id == 1)
+                DataManager.Instance.PlayerData.m_items.Add("반지");
             break;
 
         case 90:
-            if(DataManager.Instance.m_now_player.m_quest_action_id == 1) 
-                DataManager.Instance.m_now_player.m_items.Add("이사용 가방 열쇠");
-            else if(DataManager.Instance.m_now_player.m_quest_action_id == 2)
-                DataManager.Instance.m_now_player.m_items.Add("오래된 CD");
+            if(DataManager.Instance.PlayerData.m_quest_action_id == 1) 
+                DataManager.Instance.PlayerData.m_items.Add("이사용 가방 열쇠");
+            else if(DataManager.Instance.PlayerData.m_quest_action_id == 2)
+                DataManager.Instance.PlayerData.m_items.Add("오래된 CD");
             break;
 
         case 110:
-            if(DataManager.Instance.m_now_player.m_quest_action_id == 1)
-                DataManager.Instance.m_now_player.m_items.Add("피묻은 식칼");
+            if(DataManager.Instance.PlayerData.m_quest_action_id == 1)
+                DataManager.Instance.PlayerData.m_items.Add("피묻은 식칼");
             break;
         }
     }

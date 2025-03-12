@@ -1,37 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using _Singleton;
 using System.IO;
-using JetBrains.Annotations;
-using System;
 
 public class DataManager : Singleton<DataManager>
 {
-    public PlayerData m_now_player = new PlayerData();
-    public string m_save_path;
-    public int m_now_slot;
-
-    private void Start()
+    private PlayerData m_now_player;
+    public PlayerData PlayerData
     {
-        m_save_path = Application.persistentDataPath + "/save";
+        get { return m_now_player; }
+        set { m_now_player = value; }
+    }
+
+    private string m_save_data_path;
+    public string DataPath
+    {
+        get { return m_save_data_path; }
+    }
+
+    private int m_now_slot;
+    public int Current
+    {
+        get { return m_now_slot; }
+        set { m_now_slot = value; }
+    }
+
+    private new void Awake()
+    {
+        base.Awake();
+
+        m_save_data_path = Path.Combine(Application.persistentDataPath, "save");
+
+        PlayerData = new PlayerData();
     }
 
     public void SaveData()
     {
-        string data = JsonUtility.ToJson(m_now_player);
-        File.WriteAllText(m_save_path + m_now_slot.ToString(), data);
+        var json_data = JsonUtility.ToJson(PlayerData);
+        File.WriteAllText(m_save_data_path + m_now_slot.ToString(), json_data);
     }
 
     public void LoadData()
     {
-        string data = File.ReadAllText(m_save_path + m_now_slot.ToString());
-        m_now_player = JsonUtility.FromJson<PlayerData>(data);
+        var json_data = File.ReadAllText(m_save_data_path + m_now_slot.ToString());
+        PlayerData = JsonUtility.FromJson<PlayerData>(json_data);
     }
 
     public void DataClear()
     {
         m_now_slot = -1;
-        m_now_player = new PlayerData();
+        PlayerData = null;
     }
 }

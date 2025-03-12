@@ -1,144 +1,106 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using _State;
-using _EventBus;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    public Rigidbody2D m_rigidbody;
-    public Animator m_animator;
-    public BoxCollider2D m_box_collider;
+    #region 상태 변수
+    private IState<PlayerCtrl> m_idle_state;
+    private IState<PlayerCtrl> m_move_state;
+    private PlayerStateContext m_state_context;
+
+    #endregion
+    public Rigidbody2D Rigidbody { get; private set; }
+    public Animator Animator { get; private set; }
+    public BoxCollider2D Collider { get; private set; }
+    public bool NonPass { get; set; }
+    public float Speed { get; set; } = 0.02f;
+
+    private Vector3 m_direction = Vector3.zero;
+    public Vector3 Direction
+    {
+        get { return m_direction; }
+        set { m_direction = value; }
+    }
+
+    public PlayerStateContext StateContext
+    {
+        get { return m_state_context; }
+        private set { m_state_context = value; }
+    }
 
     public LayerMask m_layer_mask;
-    public bool m_is_no_passing = false;
 
-    public float m_player_speed = 0.02f;
-    public Vector3 m_move_vec;
-    public int m_walk_count;
+    private int m_walk_count;
+    public int WalkCount
+    {
+        get { return m_walk_count; }
+        set { m_walk_count = value; }
+    }
+
     private int m_current_walk_count;
-    public bool m_is_move = false;
+    public int CurrentWalkCount
+    {
+        get { return m_current_walk_count; }
+        set { m_current_walk_count = value; }
+    }
 
-    private IPlayerState m_stop_state, m_move_state;
-    private PlayerStateContext m_player_state_context;
 
     private void OnEnable()
     {
-        GameEventBus.Subscribe(GameEventType.PLAYING, GameManager.Instance.Playing);
-        GameEventBus.Subscribe(GameEventType.PAUSE, GameManager.Instance.Pause);
-        GameEventBus.Subscribe(GameEventType.FINISH, GameManager.Instance.Finish);
-        GameEventBus.Subscribe(GameEventType.DEAD, GameManager.Instance.Dead);
+        GameEventBus.Subscribe(GameEventType.Playing, GameManager.Instance.Playing);
+        GameEventBus.Subscribe(GameEventType.Setting, GameManager.Instance.Setting);
+        GameEventBus.Subscribe(GameEventType.Dead, GameManager.Instance.Dead);
+        GameEventBus.Subscribe(GameEventType.Clear, GameManager.Instance.Clear);
 
-        SoundManager.Instance.GameBackground();
-
-        transform.position = DataManager.Instance.m_now_player.m_player_position;
+        GameEventBus.Publish(GameEventType.Playing);
     }
 
     private void OnDisable()
     {
-        GameEventBus.Unsubscribe(GameEventType.PLAYING, GameManager.Instance.Playing);
-        GameEventBus.Unsubscribe(GameEventType.PAUSE, GameManager.Instance.Pause);
-        GameEventBus.Unsubscribe(GameEventType.FINISH, GameManager.Instance.Finish);
-        GameEventBus.Unsubscribe(GameEventType.DEAD, GameManager.Instance.Dead);
+        GameEventBus.Unsubscribe(GameEventType.Playing, GameManager.Instance.Playing);
+        GameEventBus.Unsubscribe(GameEventType.Setting, GameManager.Instance.Setting);
+        GameEventBus.Unsubscribe(GameEventType.Dead, GameManager.Instance.Dead);
+        GameEventBus.Unsubscribe(GameEventType.Clear, GameManager.Instance.Clear);
 
-        SoundManager.Instance.TitleBackground();
-
-        DataManager.Instance.m_now_slot = -1;
+        DataManager.Instance.Current = -1;
     }
 
-    private void Start()
+    private void Awake()
     {
-        GameEventBus.Publish(GameEventType.PLAYING);
+        transform.position = DataManager.Instance.PlayerData.m_player_position;
 
-        m_rigidbody = GetComponent<Rigidbody2D>();
-        m_animator = GetComponent<Animator>();
-        m_box_collider = GetComponent<BoxCollider2D>();
+        Rigidbody = GetComponent<Rigidbody2D>();
+        Animator = GetComponent<Animator>();
+        Collider = GetComponent<BoxCollider2D>();
 
-        m_stop_state = gameObject.AddComponent<PlayerStopState>();
+        m_idle_state = gameObject.AddComponent<PlayerIdleState>();
         m_move_state = gameObject.AddComponent<PlayerMoveState>();
 
-        m_player_state_context = new PlayerStateContext(this);
-        m_player_state_context.Transition(m_stop_state);
+        StateContext = new PlayerStateContext(this);
+
+        ChangeState(PlayerState.Idle);
     }
 
     private void Update()
     {
-        DataManager.Instance.m_now_player.m_player_position = transform.position;
+        DataManager.Instance.PlayerData.m_player_position = transform.position;
 
-        if(!GameManager.Instance.m_is_talk && GameManager.Instance.m_game_status != "pause")
-        {
-            if(!m_is_move)
-            {
-                if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-                {
-                    m_is_no_passing = false;
-                    m_is_move = true;
-                    StartCoroutine(MoveCoroutine());
-                }
-            }
+        Direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
 
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            SoundManager.Instance.ButtonClick();
-
-            if(GameManager.Instance.m_game_status != "pause")
-            {
-                SoundManager.Instance.m_bgm.Pause();
-                GameEventBus.Publish(GameEventType.PAUSE);
-            }
-            else if(GameObject.Find("Title_Inner_Panel") == null && GameObject.Find("Item_Inner_Panel") == null && GameObject.Find("Save_Inner_Panel") == null)
-            {
-                SoundManager.Instance.m_bgm.UnPause();
-                GameEventBus.Publish(GameEventType.PLAYING);
-            }
-        }
+        StateContext.ExecuteUpdate();
     }
 
-    private IEnumerator MoveCoroutine()
+    public void ChangeState(PlayerState state)
     {
-        while(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        switch(state)
         {
-            m_move_vec.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
-
-            if(m_move_vec.x != 0)
-                m_move_vec.y = 0;
-            
-            RaycastHit2D hit = GetComponent<ScanManager>().CheckCanMove();
-            if(hit.transform != null)
-            {
-                m_is_no_passing = true;
-                MovePlayer();
+            case PlayerState.Idle:
+                StateContext.Transition(m_idle_state);
                 break;
-            }
-
-            MovePlayer();
-
-            while(m_current_walk_count < m_walk_count)
-            {
-                if(m_move_vec.x != 0)
-                    transform.Translate(m_move_vec.x * m_player_speed, 0, 0);
-                else if(m_move_vec.y != 0)
-                    transform.Translate(0, m_move_vec.y * m_player_speed, 0);
-
-                m_current_walk_count++;
-                yield return new WaitForSeconds(0.01f);
-            }
-            m_current_walk_count = 0;
+            
+            case PlayerState.Move:
+                StateContext.Transition(m_move_state);
+                break;
         }
-        m_is_move = false;
-        
-        StopPlayer();
-    }
-
-    public void StopPlayer()
-    {
-        m_player_state_context.Transition(m_stop_state);
-    }
-
-    public void MovePlayer()
-    {
-        m_player_state_context.Transition(m_move_state);
     }
 }
