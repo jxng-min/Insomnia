@@ -39,6 +39,7 @@ public class SettingManager : MonoBehaviour
             }
             else if(m_inventory_ui_animator.GetBool("Open"))
             {
+                m_setting_button_ctrl.enabled = true;
                 m_inventory_ui_animator.SetBool("Open", false);
             }
             else
@@ -88,6 +89,7 @@ public class SettingManager : MonoBehaviour
 
     public void BTN_Save()
     {
+        SoundManager.Instance.PlayEffect("Button Click");
         m_setting_button_ctrl.enabled = false;
         m_save_ui_animator.SetBool("Open", true);
         m_save_button_ctrl.Initialization();
@@ -96,21 +98,23 @@ public class SettingManager : MonoBehaviour
 
     public void BTN_Inventory()
     {
+        SoundManager.Instance.PlayEffect("Button Click");
         m_setting_button_ctrl.enabled = false;
         m_inventory_ui_animator.SetBool("Open", true);
     }
 
     public void BTN_Title()
     {
+        SoundManager.Instance.PlayEffect("Button Click");
         LoadingManager.Instance.LoadScene("Title");
     }
 
     public void BTN_Slot(int index)
     {
-        string save_path = DataManager.Instance.DataPath + $"{index}";
+        SoundManager.Instance.PlayEffect("Button Click");
 
-        var json_data = JsonUtility.ToJson(DataManager.Instance.PlayerData);
-        File.WriteAllText(save_path, json_data);
+        DataManager.Instance.PlayerData.m_items = GameObject.Find("Inventory Manager").GetComponent<Inventory>().SaveInventory();
+        DataManager.Instance.SaveData(index);
 
         int min = Mathf.FloorToInt(DataManager.Instance.PlayerData.m_play_time / 60);
         int sec = Mathf.FloorToInt(DataManager.Instance.PlayerData.m_play_time % 60);

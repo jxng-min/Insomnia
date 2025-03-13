@@ -26,11 +26,13 @@ public class ButtonCtrl : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
+            SoundManager.Instance.PlayEffect("Button Select");
             Index = (Index - 1 + m_buttons.Length) % m_buttons.Length;
             EventSystem.current.SetSelectedGameObject(m_buttons[Index].gameObject);            
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow))
         {
+            SoundManager.Instance.PlayEffect("Button Select");
             Index = (Index + 1 + m_buttons.Length) % m_buttons.Length;
             EventSystem.current.SetSelectedGameObject(m_buttons[Index].gameObject);
         }

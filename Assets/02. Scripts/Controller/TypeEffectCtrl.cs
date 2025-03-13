@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class TypeEffectCtrl : MonoBehaviour
 {
-    private GameObject m_end_cursor;
+    [Header("초당 작성될 문자의 비율")]
+    [SerializeField] private int m_cps;
 
-    public int m_cps;
     private string m_target_text;
     private TMP_Text m_current_text;
     private int m_current_idx;
@@ -27,7 +27,7 @@ public class TypeEffectCtrl : MonoBehaviour
     {
         m_current_text.text = "";
         m_current_idx = 0;
-        m_end_cursor.SetActive(false);
+        DialogueManager.Instance.Cursor.SetActive(false);
 
         m_interval = 1.0f / m_cps;
         Invoke("Effecting", m_interval);
@@ -48,14 +48,6 @@ public class TypeEffectCtrl : MonoBehaviour
 
     private void EffectEnd()
     {
-        m_end_cursor.SetActive(true);
-    }
-
-    public bool GetCursorState()
-    {
-        if(GameObject.Find("Cursor_Dialogue") == null)
-            return false;
-        else
-            return true;
+        DialogueManager.Instance.Cursor.SetActive(true);
     }
 }

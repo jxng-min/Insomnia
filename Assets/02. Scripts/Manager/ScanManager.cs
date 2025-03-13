@@ -2,70 +2,93 @@ using UnityEngine;
 
 public class ScanManager : MonoBehaviour
 {
-    private Vector3 m_dir_vec;
-    private GameObject m_scan_object;
-    private PlayerCtrl m_player_ctrl;
-
-    private void Start()
+    private Vector3 m_ray_direction;
+    public Vector3 Direction
     {
-        m_player_ctrl = GetComponent<PlayerCtrl>();
+        get { return m_ray_direction; }
+        private set { m_ray_direction = value; }
     }
+
+    private ObjectInfo m_current_object;
+    private bool m_can_interaction = false;
 
     private void Update()
     {
-        if(m_player_ctrl.Direction.x != 0f)
-        {
-            if(m_player_ctrl.Direction.x >= 0f)
-                m_dir_vec = Vector3.right;
-            else
-                m_dir_vec = Vector3.left;
-        }
-        else if(m_player_ctrl.Direction.y != 0f)
-        {
-            if(m_player_ctrl.Direction.y >= 0f)
-                m_dir_vec = Vector3.up;
-            else
-                m_dir_vec = Vector3.down;
-        }
+        SetRayDirection();
+        CheckObject();
 
-        // if(GameManager.Instance.m_game_status == "playing" 
-        //                                     && Input.GetButtonDown("Jump") 
-        //                                     && m_scan_object != null
-        //                                     && m_end_cursor.activeSelf
-        //   )
-        // {
-        //     GameManager.Instance.Talking(m_scan_object);
-        // }
-
+        if(m_can_interaction)
+        {
+            if(GameManager.Instance.GameState == GameEventType.Playing
+                                                        && Input.GetButtonDown("Jump") 
+                                                        && m_current_object is not null
+                                                        && DialogueManager.Instance.Cursor.activeSelf)
+            {
+                DialogueManager.Instance.Dialoging(m_current_object);
+            }
+        }
     }
 
-    private void FixedUpdate()
+    private void CheckObject()
     {
-        Debug.DrawRay(m_player_ctrl.Rigidbody.position, m_dir_vec * 1.25f, new Color(0, 1, 0));
+        Debug.DrawRay(GameManager.Instance.Player.Rigidbody.position, Direction * 1.25f, new Color(0, 1, 0));
         
         RaycastHit2D ray_hit = Physics2D.Raycast(
-                                                    m_player_ctrl.Rigidbody.position, 
-                                                    m_dir_vec, 
+                                                    GameManager.Instance.Player.Rigidbody.position, 
+                                                    Direction, 
                                                     1.25f, 
                                                     LayerMask.GetMask("OBJECT")
                                                 );
 
         if(ray_hit.collider)
-            m_scan_object = ray_hit.collider.gameObject;
+        {
+            m_current_object = ray_hit.transform.GetComponent<ObjectInfo>();
+            m_can_interaction = true;
+        }
         else
-            m_scan_object = null;
+        {
+            m_current_object = null;
+            m_can_interaction = false;
+        }
+    }
+
+    private void SetRayDirection()
+    {
+        if(GameManager.Instance.Player.Direction.x is not 0f)
+        {
+            if(GameManager.Instance.Player.Direction.x >= 0f)
+            {
+                Direction = Vector3.right;
+            }
+            else
+            {
+                Direction = Vector3.left;
+            }
+        }
+        else if(GameManager.Instance.Player.Direction.y is not 0f)
+        {
+            if(GameManager.Instance.Player.Direction.y >= 0f)
+            {
+                Direction = Vector3.up;
+            }
+            else
+            {
+                Direction = Vector3.down;
+            }
+        }
     }
 
     public RaycastHit2D CheckCanMove()
     {
-        Vector2 move_start = m_player_ctrl.transform.position;
+        Vector2 move_start = GameManager.Instance.Player.transform.position;
         Vector2 move_end = move_start + new Vector2 (
-                                                        m_player_ctrl.Direction.x * m_player_ctrl.Speed * m_player_ctrl.WalkCount,
-                                                        m_player_ctrl.Direction.y * m_player_ctrl.Speed * m_player_ctrl.WalkCount
+                                                        GameManager.Instance.Player.Direction.x * GameManager.Instance.Player.Speed * GameManager.Instance.Player.WalkCount,
+                                                        GameManager.Instance.Player.Direction.y * GameManager.Instance.Player.Speed * GameManager.Instance.Player.WalkCount
                                                     );
-        m_player_ctrl.Collider.enabled = false;
-        RaycastHit2D hit = Physics2D.Linecast(move_start, move_end, m_player_ctrl.m_layer_mask);
-        m_player_ctrl.Collider.enabled = true;
+
+        GameManager.Instance.Player.Collider.enabled = false;
+        RaycastHit2D hit = Physics2D.Linecast(move_start, move_end, GameManager.Instance.Player.m_layer_mask);
+        GameManager.Instance.Player.Collider.enabled = true;
 
         return hit;
     }

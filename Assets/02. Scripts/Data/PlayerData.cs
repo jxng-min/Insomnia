@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,7 +7,7 @@ public class PlayerData
     public float m_play_time;
     public int m_quest_id;
     public int m_quest_action_id;
-    public List<string> m_items;
+    public InventoryDataList m_items;
 
     public PlayerData()
     {
@@ -16,6 +15,6 @@ public class PlayerData
         m_play_time = 0f;
         m_quest_id = 10;
         m_quest_action_id = 0;
-        m_items = new List<string>();
+        m_items = new InventoryDataList();
     }
 }

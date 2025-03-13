@@ -48,18 +48,21 @@ public class TitleCtrl : MonoBehaviour
 
     public void BTN_Start()
     {
+        SoundManager.Instance.PlayEffect("Button Click");
         DataManager.Instance.PlayerData = new PlayerData();
         LoadingManager.Instance.LoadScene("Game");
     }
 
     public void BTN_Load()
     {
+        SoundManager.Instance.PlayEffect("Button Click");
         m_load_ui_animator.SetBool("Open", true);
         m_load_ui_button_ctrl.Initialization();
     }
 
     public void BTN_Exit()
     {
+        SoundManager.Instance.PlayEffect("Button Click");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -69,6 +72,7 @@ public class TitleCtrl : MonoBehaviour
 
     public void BTN_LoadSlot(int slot_number)
     {
+        SoundManager.Instance.PlayEffect("Button Click");
         DataManager.Instance.Current = slot_number;
 
         if(m_save_files[slot_number])

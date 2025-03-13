@@ -18,13 +18,16 @@ public class GameManager : Singleton<GameManager>
 
     private bool m_can_init = true;
 
-    private void Start()
+    private new void Awake()
     {
+        base.Awake();
+
         GameEventBus.Subscribe(GameEventType.None, None);
         GameEventBus.Subscribe(GameEventType.Loading, Loading);
+    }
 
-        SoundManager.Instance.PlayBGM("Title Background");
-
+    private void Start()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -32,6 +35,8 @@ public class GameManager : Singleton<GameManager>
     public void None()
     {
         GameState = GameEventType.None;
+
+        SoundManager.Instance.PlayBGM("Title Background");
 
         m_can_init = true;
     }
@@ -50,12 +55,21 @@ public class GameManager : Singleton<GameManager>
             m_can_init = false;
 
             Player = FindAnyObjectByType<PlayerCtrl>();
+
+            SoundManager.Instance.PlayBGM("Game Background");
+        }
+        else
+        {
+            DialogueManager.Instance.Initialization();
+
+            SoundManager.Instance.BGM.Play();
         }
     }
 
     public void Setting()
     {
         GameState = GameEventType.Setting;
+        SoundManager.Instance.BGM.Pause();
     }
 
     public void Dead()

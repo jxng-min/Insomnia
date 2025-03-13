@@ -33,11 +33,13 @@ public class LoadSlotCtrl : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.UpArrow))
             {
+                SoundManager.Instance.PlayEffect("Button Select");
                 Index = (Index - 1 + m_slots.Length) % m_slots.Length;
                 EventSystem.current.SetSelectedGameObject(m_slots[Index].gameObject);
             }
             else if(Input.GetKeyDown(KeyCode.DownArrow))
             {
+                SoundManager.Instance.PlayEffect("Button Select");
                 Index = (Index + 1 + m_slots.Length) % m_slots.Length;
                 EventSystem.current.SetSelectedGameObject(m_slots[Index].gameObject);
             }

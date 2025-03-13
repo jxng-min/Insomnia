@@ -32,10 +32,10 @@ public class DataManager : Singleton<DataManager>
         PlayerData = new PlayerData();
     }
 
-    public void SaveData()
+    public void SaveData(int index)
     {
-        var json_data = JsonUtility.ToJson(PlayerData);
-        File.WriteAllText(m_save_data_path + m_now_slot.ToString(), json_data);
+        var json_data = JsonUtility.ToJson(PlayerData, true);
+        File.WriteAllText(m_save_data_path + $"{index}", json_data);
     }
 
     public void LoadData()
