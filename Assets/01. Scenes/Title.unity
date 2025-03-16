@@ -2014,7 +2014,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db12b5d6bea06823f8e36c47d6412392, type: 2}
   - {fileID: 11400000, guid: 10eb2a9bc0abc4c059ea313a8c11e842, type: 2}
   - {fileID: 11400000, guid: 99bddbae8cf8056b9badf417ae2215a8, type: 2}
-  <QuestCount>k__BackingField: 11
+  - {fileID: 11400000, guid: 3242aa4319c59b956b96f1600971cf6b, type: 2}
+  - {fileID: 11400000, guid: dac0a293115857a15a61a27c8f455cc1, type: 2}
+  - {fileID: 11400000, guid: 8bb08bf4912d26831862325050c38c53, type: 2}
+  <QuestCount>k__BackingField: 14
 --- !u!4 &1324352364
 Transform:
   m_ObjectHideFlags: 0
@@ -2094,6 +2097,7 @@ MonoBehaviour:
   m_background_source: {fileID: 1377395887}
   m_background_clips:
   - {fileID: 8300000, guid: b68e759b74f74104b890352eafacca06, type: 3}
+  - {fileID: 8300000, guid: 99dbfb1311b519d2f9402ac6544326f3, type: 3}
   - {fileID: 8300000, guid: 478d7a99c360780488cab42070f4339f, type: 3}
   m_effect_clips:
   - {fileID: 8300000, guid: bd9ff6e7cc6a77243b301f43cd2ab0c1, type: 3}

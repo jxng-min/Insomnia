@@ -11,7 +11,7 @@ public class PlayerCtrl : MonoBehaviour
     public Animator Animator { get; private set; }
     public BoxCollider2D Collider { get; private set; }
     public bool NonPass { get; set; }
-    public float Speed { get; set; } = 0.02f;
+    public float Speed { get; set; } = 0.03f;
 
     private Vector3 m_direction = Vector3.zero;
     public Vector3 Direction
@@ -74,7 +74,7 @@ public class PlayerCtrl : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.Instance.GameState == GameEventType.Playing)
+        if(GameManager.Instance.GameState == GameEventType.Playing && !DialogueManager.Instance.IsTalking)
         {
             DataManager.Instance.PlayerData.m_player_position = transform.position;
 
@@ -127,7 +127,6 @@ public class PlayerCtrl : MonoBehaviour
             }
             CurrentWalkCount = 0;
         }
-        Debug.Log("여기");
         Animator.SetBool("IsMove", false);
         IsMove = false;
     }

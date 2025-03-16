@@ -3,13 +3,6 @@ using UnityEngine;
 
 public class SettingManager : MonoBehaviour
 {
-    private static bool m_is_ui_active = false;
-    public static bool IsActive
-    {
-        get { return m_is_ui_active; }
-        private set { m_is_ui_active = value; }
-    }
-
     [Header("설정 UI 오브젝트")]
     [SerializeField] private GameObject m_setting_ui_object;
     private ButtonCtrl m_setting_button_ctrl;
@@ -44,18 +37,14 @@ public class SettingManager : MonoBehaviour
             }
             else
             {
-                if(!IsActive)
+                if(GameManager.Instance.GameState == GameEventType.Playing)
                 {
                     GameEventBus.Publish(GameEventType.Setting);
-
-                    IsActive = true;
                     m_setting_ui_object.SetActive(true);
                 }
-                else
+                else if(GameManager.Instance.GameState == GameEventType.Setting)
                 {
                     GameEventBus.Publish(GameEventType.Playing);
-
-                    IsActive = false;
                     m_setting_ui_object.SetActive(false);
                 }
             }
@@ -106,6 +95,7 @@ public class SettingManager : MonoBehaviour
     public void BTN_Title()
     {
         SoundManager.Instance.PlayEffect("Button Click");
+        SoundManager.Instance.BGM.UnPause();
         LoadingManager.Instance.LoadScene("Title");
     }
 

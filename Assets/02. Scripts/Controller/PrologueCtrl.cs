@@ -2,16 +2,15 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class EpilogueCtrl : MonoBehaviour
+public class Prologue : MonoBehaviour
 {
-    [Header("엔딩 에필로그를 출력할 라벨")]
-    [SerializeField] private TMP_Text m_credit_label;
+    [Header("오프닝 프롤로그를 출력할 라벨")]
+    [SerializeField] private TMP_Text m_prologue_label;
 
-    [Header("에필로그에 들어갈 텍스트 목록")]
-    [SerializeField][TextArea] private string[] m_credit_texts;
+    [Header("프롤로그 들어갈 텍스트 목록")]
+    [SerializeField][TextArea] private string[] m_prologue_texts;
 
     private int m_current_index;
-    private int m_current_count;
 
     private void Awake()
     {
@@ -22,27 +21,19 @@ public class EpilogueCtrl : MonoBehaviour
     {
         SoundManager.Instance.PlayBGM("Loading Background");
 
-        if(GameManager.Instance.EndingType == 1)
-        {
-            StartCoroutine(Fade(0, 4));
-        }
-        else if(GameManager.Instance.EndingType == 2)
-        {
-            StartCoroutine(Fade(4, 5));
-        }
+        StartCoroutine(Fade());
     }
 
-    private IEnumerator Fade(int start_index, int count)
+    private IEnumerator Fade()
     {
-        m_current_index = start_index;
-        m_credit_label.text = m_credit_texts[m_current_index];
+        m_prologue_label.text = m_prologue_texts[m_current_index];
 
         yield return null;
 
         float elapsed_time = 0f;
         float target_time = 2f;
 
-        Color color = m_credit_label.color;
+        Color color = m_prologue_label.color;
 
         while(elapsed_time <= target_time)
         {
@@ -52,11 +43,11 @@ public class EpilogueCtrl : MonoBehaviour
             float t = elapsed_time / target_time;
 
             color.a = Mathf.Lerp(0f, 0.7f, t);
-            m_credit_label.color = color;
+            m_prologue_label.color = color;
         }
 
         color.a = 0.7f;
-        m_credit_label.color = color;
+        m_prologue_label.color = color;
 
         elapsed_time = 0f;
 
@@ -68,20 +59,19 @@ public class EpilogueCtrl : MonoBehaviour
             float t = elapsed_time / target_time;
 
             color.a = Mathf.Lerp(0.7f, 0f, t);
-            m_credit_label.color = color;
+            m_prologue_label.color = color;
         }
 
-        if(m_current_count < count - 1)
+        if(m_current_index < 2)
         {
             m_current_index++;
-            m_current_count++;
 
-            yield return StartCoroutine(Fade(m_current_index, count));
+            yield return StartCoroutine(Fade());
         }
         else
         {
             yield return new WaitForSeconds(1f);
-            LoadingManager.Instance.LoadScene("Title");
+            LoadingManager.Instance.LoadScene("Game");
         }
     }
 }

@@ -197,6 +197,7 @@ public class QuestManager : Singleton<QuestManager>
         if(quest_data.QuestState == QuestState.CLEARED_PAST)
         {
             CompleteQuest(quest_data.ID, false);
+            return;
         }
         else
         {
@@ -207,7 +208,9 @@ public class QuestManager : Singleton<QuestManager>
         for(int i = 0; i < quest_data.InvestigationQuests.Length; i++)
         {
             UpdateInvestigationQuestCount(quest_data.InvestigationQuests[i].ObjectCode);
-        }           
+        }
+
+        QuestUIManager.Instance.UpdateCurrentQuestState(quest_data.ID);
     }
 
     public void CompleteQuest(int quest_id, bool is_give_reward = true)
@@ -304,8 +307,6 @@ public class QuestManager : Singleton<QuestManager>
             foreach(var item_quest in quest_data.ItemQuests)
             {
                 item_quest.CurrentCount = m_inventory.GetItemCount(item_quest.ItemCode);
-                Debug.Log($"아이템 코드{item_quest.ItemCode} : 아이템 개수{m_inventory.GetItemCount(item_quest.ItemCode)}");
-
                 item_quest.ParticularClear = item_quest.CurrentCount >= item_quest.TotalCount;
             }
         }

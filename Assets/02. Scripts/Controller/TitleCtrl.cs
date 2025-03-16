@@ -50,7 +50,7 @@ public class TitleCtrl : MonoBehaviour
     {
         SoundManager.Instance.PlayEffect("Button Click");
         DataManager.Instance.PlayerData = new PlayerData();
-        LoadingManager.Instance.LoadScene("Game");
+        LoadingManager.Instance.LoadScene("Prologue");
     }
 
     public void BTN_Load()
