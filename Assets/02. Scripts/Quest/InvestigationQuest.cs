@@ -10,7 +10,7 @@ public class InvestigationQuest : QuestBase
         get { return m_target_object_code; }
     }
 
-    [Header("조사할 횟수(기본적으로 1을 입력)")]
+    [Header("조사할 횟수(기본적으로 0을 입력)")]
     [SerializeField] private int m_total_count;
     public int InvestigationCount
     {
@@ -21,10 +21,11 @@ public class InvestigationQuest : QuestBase
     public int CurrentCount
     {
         get { return m_current_count; }
+        set { m_current_count = value; }
     }
 
     public override string GetProgressText()
     {
-        return $"{CurrentCount} / {InvestigationCount}";
+        return "";
     }
 }

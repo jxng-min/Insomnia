@@ -18,6 +18,13 @@ public class GameManager : Singleton<GameManager>
 
     private bool m_can_init = true;
 
+    private int ending_type = 0;
+    public int EndingType
+    {
+        get { return ending_type; }
+        set { ending_type = value; }
+    }
+
     private new void Awake()
     {
         base.Awake();
@@ -37,6 +44,8 @@ public class GameManager : Singleton<GameManager>
         GameState = GameEventType.None;
 
         SoundManager.Instance.PlayBGM("Title Background");
+        QuestManager.Instance.ResetScriptableObject();
+        EndingType = 0;
 
         m_can_init = true;
     }
@@ -57,6 +66,9 @@ public class GameManager : Singleton<GameManager>
             Player = FindAnyObjectByType<PlayerCtrl>();
 
             SoundManager.Instance.PlayBGM("Game Background");
+            QuestManager.Instance.Initialization();
+            QuestUIManager.Instance.Initialization();
+            QuestManager.Instance.LoadCurrentQuestData();
         }
         else
         {

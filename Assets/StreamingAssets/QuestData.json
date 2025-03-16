@@ -1,0 +1,74 @@
+{
+    "m_data_list": [
+        {
+            "m_quest_id": 0,
+            "m_title": "컴퓨터 조사하기",
+            "m_compact_content": "컴퓨터 조사하기"
+        },
+        {
+            "m_quest_id": 1,
+            "m_title": "스마트폰 찾기",
+            "m_compact_content": "침대 조사하기"
+        },
+        {
+            "m_quest_id": 2,
+            "m_title": "침대에서 휴식하기",
+            "m_compact_content": "스마트폰 [{0}]\n침대에 눕기"
+        },
+        {
+            "m_quest_id": 3,
+            "m_title": "편지 찾기1",
+            "m_compact_content": "책장 조사하기"
+        },
+        {
+            "m_quest_id": 4,
+            "m_title": "편지를 읽은만한 곳 찾기",
+            "m_compact_content": "구겨진 편지 [{0}]\n서재 책상에 앉기"
+        },
+        {
+            "m_quest_id": 5,
+            "m_title": "편지 찾기2",
+            "m_compact_content": "서재 책장 조사하기"
+        },
+        {
+            "m_quest_id": 6,
+            "m_title": "추억 찾기1",
+            "m_compact_content": "이사박스 조사하기"
+        },
+        {
+            "m_quest_id": 7,
+            "m_title": "CD 재생하기",
+            "m_compact_content": "CD [{0}]\nTV 조사하기"
+        },
+        {
+            "m_quest_id": 8,
+            "m_title": "추억 찾기2",
+            "m_compact_content": "캐리어 조사 시도하기"
+        },
+        {
+            "m_quest_id": 9,
+            "m_title": "캐리어 열쇠 찾기",
+            "m_compact_content": "통기타 조사하기"        
+        },
+        {
+            "m_quest_id": 10,
+            "m_title": "추억 찾기3",
+            "m_compact_content": "캐리어 열쇠 [{0}]\n캐리어 조사하기"
+        },
+        {
+            "m_quest_id": 11,
+            "m_title": "악몽을 받아들이기",
+            "m_compact_content": "침대에서 잠들기"
+        },
+        {
+            "m_quest_id": 12,
+            "m_title": "선택 1: 추락사",
+            "m_compact_content": "테라스에서 뛰어내리기"
+        },
+        {
+            "m_quest_id": 13,
+            "m_title": "선택 2: 자수",
+            "m_compact_content": "현관 밖으로 나가기"
+        }
+    ]
+}

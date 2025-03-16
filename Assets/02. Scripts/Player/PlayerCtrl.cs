@@ -60,7 +60,6 @@ public class PlayerCtrl : MonoBehaviour
         GameEventBus.Unsubscribe(GameEventType.Playing, GameManager.Instance.Playing);
         GameEventBus.Unsubscribe(GameEventType.Setting, GameManager.Instance.Setting);
         GameEventBus.Unsubscribe(GameEventType.Dead, GameManager.Instance.Dead);
-        GameEventBus.Unsubscribe(GameEventType.Clear, GameManager.Instance.Clear);
 
         DataManager.Instance.Current = -1;
     }

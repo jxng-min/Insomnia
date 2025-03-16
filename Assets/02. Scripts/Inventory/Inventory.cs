@@ -17,11 +17,6 @@ public class Inventory : MonoBehaviour
         m_slots = m_slots_root.GetComponentsInChildren<InventorySlot>();
     }
 
-    private void Start()
-    {
-        LoadInventory();
-    }
-
     public void AcquireItem(Item item, int count = 1)
     {
         for(int i = 0; i < m_slots.Length; i++)
@@ -45,7 +40,7 @@ public class Inventory : MonoBehaviour
 
             if(m_slots[i].Item.ID == (int)code)
             {
-                return m_slots[i].Item.ID;
+                return m_slots[i].Count;
             }
         }
 

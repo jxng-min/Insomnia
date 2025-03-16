@@ -24,7 +24,238 @@ public class ScanManager : MonoBehaviour
                                                         && m_current_object is not null
                                                         && DialogueManager.Instance.Cursor.activeSelf)
             {
-                DialogueManager.Instance.Dialoging(m_current_object);
+                int quest_id = -1;
+                switch(m_current_object.Data.ID)
+                {
+                    case (int)ObjectCode.Computer:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 0:
+                                    CheckQuest(quest_id, 0, 3, 0, 0, 3, 2);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;
+                    }
+
+                    case (int)ObjectCode.Bed2:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 1:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 3);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;
+                    }
+
+                    case (int)ObjectCode.Bed1:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            Debug.Log(quest_id);
+                            switch(quest_id)
+                            {
+                                case 2:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 4);
+                                    break;
+                                
+                                case 11:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 4, 6);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;
+                    }
+
+                    case (int)ObjectCode.BookShelf0:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 3:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 4);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;                        
+                    }
+
+                    case (int)ObjectCode.LibraryDesk:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 4:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 6);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;                        
+                    }
+
+                    case (int)ObjectCode.BookShelf2:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 5:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 8);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }
+
+                    case (int)ObjectCode.Box1:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 6:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 5);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }
+
+                    case (int)ObjectCode.TV:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 7:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 4);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }
+
+                    case (int)ObjectCode.Carrier:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 8:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 3);
+                                    break;
+                                
+                                case 10:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 3, 4);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }
+
+                    case (int)ObjectCode.Guitar0:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 9:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 4);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }                    
+
+                    case (int)ObjectCode.Exit:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 13:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 0);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }           
+
+                    case (int)ObjectCode.Terrace:
+                    {
+                        if(m_current_object.GetComponent<QuestObject>().IsExistQuest(out quest_id))
+                        {
+                            switch(quest_id)
+                            {
+                                case 12:
+                                    CheckQuest(quest_id, 0, 0, 0, 0, 0, 0);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            DialogueManager.Instance.Dialoging(m_current_object);
+                        }
+                        break;   
+                    }           
+
+                    default:
+                        DialogueManager.Instance.Dialoging(m_current_object);
+                        break;
+                }
             }
         }
     }
@@ -91,5 +322,36 @@ public class ScanManager : MonoBehaviour
         GameManager.Instance.Player.Collider.enabled = true;
 
         return hit;
+    }
+
+    private void CheckQuest(int quest_id, int never_index, int never_count, int going_index, int going_count, int clear_index, int clear_count)
+    {
+        if(quest_id == -1)
+        {
+            return;
+        }
+
+        if(QuestManager.Instance.CheckQuestState(quest_id) == QuestState.NEVER_RECEIVED)
+        {
+            DialogueManager.Instance.Dialoging(m_current_object, never_index, never_count);
+
+            if(!DialogueManager.Instance.IsTalking)
+            {
+                QuestManager.Instance.ReceiveQuest(quest_id);
+            }
+        }
+        else if(QuestManager.Instance.CheckQuestState(quest_id) == QuestState.ON_GOING)
+        {
+            DialogueManager.Instance.Dialoging(m_current_object, going_index, going_count);
+        }
+        else if(QuestManager.Instance.CheckQuestState(quest_id) == QuestState.CLEAR)
+        {
+            DialogueManager.Instance.Dialoging(m_current_object, clear_index, clear_count);
+
+            if(!DialogueManager.Instance.IsTalking)
+            {
+                QuestManager.Instance.CompleteQuest(quest_id);
+            }            
+        }
     }
 }

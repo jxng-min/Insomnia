@@ -115,6 +115,7 @@ public class SettingManager : MonoBehaviour
 
         DataManager.Instance.PlayerData.m_items = GameObject.Find("Inventory Manager").GetComponent<Inventory>().SaveInventory();
         DataManager.Instance.SaveData(index);
+        QuestManager.Instance.SaveCurrentQuests(index);
 
         int min = Mathf.FloorToInt(DataManager.Instance.PlayerData.m_play_time / 60);
         int sec = Mathf.FloorToInt(DataManager.Instance.PlayerData.m_play_time % 60);
