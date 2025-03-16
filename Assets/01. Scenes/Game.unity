@@ -8038,7 +8038,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 0.4
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -39960,6 +39960,7 @@ MonoBehaviour:
   m_layer_mask:
     serializedVersion: 2
     m_Bits: 2176
+  m_walk_count: 75
 --- !u!61 &1256312881
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -132,6 +132,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -139,10 +152,10 @@ TextureImporter:
       name: GBtilesheet5colours_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2401
-        width: 158
-        height: 158
+        x: 0
+        y: 2400
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,10 +174,10 @@ TextureImporter:
       name: GBtilesheet5colours_1
       rect:
         serializedVersion: 2
-        x: 161
-        y: 2401
-        width: 158
-        height: 158
+        x: 160
+        y: 2400
+        width: 160
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1592,7 +1605,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1440
+        y: 1439
         width: 160
         height: 160
       alignment: 0
@@ -3285,8 +3298,8 @@ TextureImporter:
       name: GBtilesheet5colours_143
       rect:
         serializedVersion: 2
-        x: 0
-        y: 320
+        x: 3
+        y: 316
         width: 160
         height: 160
       alignment: 0
@@ -3945,8 +3958,8 @@ TextureImporter:
       name: GBtilesheet5colours_173
       rect:
         serializedVersion: 2
-        x: 1280
-        y: 0
+        x: 1281
+        y: 2
         width: 160
         height: 160
       alignment: 0

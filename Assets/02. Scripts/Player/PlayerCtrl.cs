@@ -1,12 +1,10 @@
-
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
     #region 상태 변수
-    private IState<PlayerCtrl> m_idle_state;
-    private IState<PlayerCtrl> m_move_state;
-    private PlayerStateContext m_state_context;
 
     #endregion
     public Rigidbody2D Rigidbody { get; private set; }
@@ -22,15 +20,9 @@ public class PlayerCtrl : MonoBehaviour
         set { m_direction = value; }
     }
 
-    public PlayerStateContext StateContext
-    {
-        get { return m_state_context; }
-        private set { m_state_context = value; }
-    }
-
     public LayerMask m_layer_mask;
 
-    private int m_walk_count;
+    [SerializeField] private int m_walk_count;
     public int WalkCount
     {
         get { return m_walk_count; }
@@ -42,6 +34,13 @@ public class PlayerCtrl : MonoBehaviour
     {
         get { return m_current_walk_count; }
         set { m_current_walk_count = value; }
+    }
+
+    private bool m_is_move = false;
+    public bool IsMove
+    {
+        get { return m_is_move; }
+        set { m_is_move = value; }
     }
 
 
@@ -71,35 +70,65 @@ public class PlayerCtrl : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         Collider = GetComponent<BoxCollider2D>();
-
-        m_idle_state = gameObject.AddComponent<PlayerIdleState>();
-        m_move_state = gameObject.AddComponent<PlayerMoveState>();
-
-        StateContext = new PlayerStateContext(this);
-
-        ChangeState(PlayerState.Idle);
     }
 
     private void Update()
     {
-        DataManager.Instance.PlayerData.m_player_position = transform.position;
+        if(GameManager.Instance.GameState == GameEventType.Playing)
+        {
+            DataManager.Instance.PlayerData.m_player_position = transform.position;
 
-        Direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
-
-        StateContext.ExecuteUpdate();
+            if(!IsMove)
+            {
+                if(Input.GetAxisRaw("Horizontal") is not 0f || Input.GetAxisRaw("Vertical") is not 0f)
+                {
+                    StartCoroutine(MoveCoroutine());
+                }
+            }
+        }
     }
 
-    public void ChangeState(PlayerState state)
+    private IEnumerator MoveCoroutine()
     {
-        switch(state)
+        IsMove = true;
+        while(Input.GetAxisRaw("Horizontal") is not 0f || Input.GetAxisRaw("Vertical") is not 0f)
         {
-            case PlayerState.Idle:
-                StateContext.Transition(m_idle_state);
+            m_direction.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
+
+            if(Direction.x is not 0f)
+            {
+                m_direction.y = 0f;
+            }
+
+            Animator.SetFloat("DirX", Direction.x);
+            Animator.SetFloat("DirY", Direction.y);
+
+            var hit = GetComponent<ScanManager>().CheckCanMove();
+            if(hit.transform is not null)
+            {
                 break;
-            
-            case PlayerState.Move:
-                StateContext.Transition(m_move_state);
-                break;
+            }
+
+            Animator.SetBool("IsMove", true);
+
+            while(CurrentWalkCount < WalkCount)
+            {
+                if(Direction.x is not 0f)
+                {
+                    transform.Translate(Direction.x * Speed, 0f, 0f);
+                }
+                else if(Direction.y is not 0f)
+                {
+                    transform.Translate(0f, Direction.y * Speed, 0f);
+                }
+
+                CurrentWalkCount++;
+                yield return new WaitForSeconds(0.01f);
+            }
+            CurrentWalkCount = 0;
         }
+        Debug.Log("여기");
+        Animator.SetBool("IsMove", false);
+        IsMove = false;
     }
 }
